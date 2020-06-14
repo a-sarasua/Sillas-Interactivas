@@ -1,0 +1,142 @@
+Trabajo Práctico: DOM
+Alumno: Sarasúa, Agustín
+Fecha de entrega: 14/06
+Vencimiento: 15/06
+
+Consigna:
+Crear una aplicación web que inicialmente muestre una mesa vacía. Utilizando el tablero de control (un botón de agregar y uno de borrar) se podrán agregar, de a una, las sillas que rodean una mesa. La mesa soporta hasta 8 sillas. Inicialmente, será la mesa vacía y los botones de agregar o no. La aparición de sillas será a criterio propio.
+
+Objetivos (para ver las funciones a usar):
+	-Cuando el usuario apreta el botón agregar, aparecerá una silla (según mi orden que está puesto más abajo) en su posición determinada. Esto pasará hasta agregar las 8 sillas. 
+	-Cuando el usuario apreta el botón borrar, desaparecerá una silla (el mismo orden pero para atrás) siendo esta la última agregada. Esto pasará hasta que no quede ni una silla.
+
+Variables:
+	-let registroSillas (integer): la usaremos para determinar cuál silla en específico se agregará o borrará. Será una variable de control que llevará el número de silla en el que se está situado. Entonces, se inicializará en 0.
+
+Inicialmente, tendremos (en HTML):
+	-Imagen de la mesa en el centro de la pantalla
+	-Botón de agregar: un '+' de color verde. Al ser el '+' una imagen, se pondrá un elemento img.
+	-Botón de borrar: un 'x' de color rojo. Será una imagen como la anterior.
+
+Entonces, el body del HTML tendrá:
+	contenido (div)
+		opción agregar (img con clase 'agregar' linkeado a 'agregar.png')
+		opción borrar (img con clase 'borrar' linkeado a 'borrar.png')
+		sala (div)
+			mesa (img)
+			//aquí se irán agregando las sillas según se requiera
+
+En CSS, tendremos que trabajar con:
+	-botón agregar y botón borrar
+		se le dará margen izquierdo cosa que no tape a las sillas
+	-sala: 
+		será el elemento 'padre' (position relative) de la mesa y las sillas
+		con esta clase posicionaremos a todo el conjunto, preferentemente en el medio
+	-mesa:
+		position absolute (como 'hijo' de 'sala')
+	-silla: todas las sillas tendrán esta clase, cuyo fin es que sean 'hijos' del div 'sala' (position absolute)
+	-sillax: cada una tendrá una combinación particular, pero hay cosas que se repiten. Veamos caso por caso:
+		-silla izquierda (silla1)
+			rotación 270 grados con 'transform(rotate(270deg))'
+			en eje Y, la misma posición que la mesa
+			en eje X, antes que la mesa
+		-silla abajo izquierda (silla2)
+			rotación 180 grados
+			en eje Y, más abajo que toda la mesa
+			en eje X, en el 1er tercio de lo que ocupa la mesa
+		-silla arriba izquierda (silla3)
+			sin rotación
+			en eje Y, más arriba que toda la mesa
+			en eje X, idem silla2
+		-silla abajo medio (silla4)
+			rotación 180 grados
+			en eje Y, idem silla2
+			en eje X, en el 2do tercio de lo que ocupa la mesa
+		-silla arriba medio (silla5)
+			sin rotación
+			en eje Y, idem silla3
+			en eje X, idem silla4
+		-silla abajo derecha (silla6)
+			rotación 180 grados
+			en eje Y, idem silla2
+			en eje X, en el 3er tercio de lo que ocupa la mesa
+		-silla arriba derecha (silla7)
+			sin rotación
+			en eje Y, idem silla3
+			en eje X, idem silla6
+		-silla derecha (silla8)
+			rotación 90 grados
+			en eje Y, idem silla 1
+			en eje X, después que la mesa
+	Entonces, podemos agrupar las sillas por características similares, quedando así:
+		-silla1 y silla8:
+			posición en eje Y más arriba que la mesa (a la midad de la altura de esta)
+		-silla2, silla4, y silla6:
+			rotación 180 grados
+			en eje Y, abajo de la mesa
+		-silla3, silla5 y silla7:
+			//sin rotación
+			en eje Y, arriba de la mesa
+		-silla2 y silla 3:
+			en eje X, en el 1er tercio de lo que ocupa la mesa 
+		-silla4 y silla5:
+			en eje X, en el 2do tercio de lo que ocupa la mesa
+		-silla6 y silla7:
+			en eje X, en el 3er tercio de lo que ocupa la mesa
+		-silla1:
+			rotación 270 grados
+			en eje x, antes que la mesa
+		-silla8:
+			rotación 90 grados
+			en eje X, después que la mesa
+
+Funciones en JS:
+
+	-Agregar silla:
+
+		-Paso 1:
+			Esperar que se requiera agregar una silla. Cuando esto suceda:
+				ver cuántas sillas se pusieron antes. Si se pusieron todas:
+					avisar que ya no hay sillas que poner
+				si no se pusieron todas:
+					anotar que agrego otra silla
+					busco la siguiente silla (o sea una silla más pero con sus particularidaeds)
+						la agrego a la mesa  
+
+		-Paso 2:
+			Cuando el usuario haga click en la imagen de clase 'agregar':
+				recibe registroSillas
+				si registroSillas es igual a 8:
+					alertar al usuario que "Ya se agregaron todas las sillas"
+				en caso de que no:
+					sumar uno a registroSillas
+					creo (const) nuevaSilla como un nuevo elemento del documento de tag 'img'
+					le linkeamos la imagen de la silla (src)
+					le agregamos 2 clases
+						la que tendrán todas las sillas: 'silla' 
+						la correspondiente a esa silla (para así ubicarla)
+							para ello, la clase será 'silla' + índice de la misma (registroSillas)						
+					buscaremos al div con clase 'sala' (queryselector)
+					le agregaremos (append) nuevaSilla
+
+	-Eliminar silla
+
+		-Paso 1:
+			Esperar a que se requiera eliminar una silla. Cuando esto pase:
+				encontrar la última silla que se agregó
+				ver cuantas sillas están puestas. Si no hay ninguna:
+					avisar que ya no hay sillas que sacar
+				si quedan sillas por sacar:
+					registrar que saco una silla
+					veo donde estaba la última silla 
+						la saco de la mesa
+
+		-Paso 2:
+			Cuando el usuario haga click en la imagen de clase 'borrar' (addEventListener):
+				crear variable (const) sillaAEliminar (querySelector)
+					será el elemento del doumento que tiene como clase 'sillax' siendo 'x' registroSillas
+				si registroSillas es 0 o sillaAEliminar es 'nulo' (o sea cuando falle al buscar una silla de índice '0')
+					alertar al usuario que "No quedan sillas por sacar"
+				en caso de que no:
+					restar uno a registroSillas
+					remuevo sillaAEliminar del div 'sala'(con removeChild)

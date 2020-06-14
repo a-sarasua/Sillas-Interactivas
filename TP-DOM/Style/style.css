@@ -1,0 +1,63 @@
+body {
+	background-color: #FFBF00;
+}
+
+.agregar, .borrar {
+	height: 80px;
+	width: 80px;
+	border-radius: 50%;
+	margin-top: 5%;
+	border: 3px solid black;
+}
+
+.agregar {
+	margin-left: 70%;
+}
+
+.mesa {
+	position: absolute;
+}
+
+.silla {
+	position: absolute;
+}
+
+.sala {
+	position: relative;
+	margin-left: 20%;	
+}
+
+.silla1 {
+	transform: rotate(270deg);
+	left: -130px;
+}
+
+.silla8 {
+	transform: rotate(90deg);
+	left: 510px;
+}
+
+.silla1, .silla8 {
+	top: 90px; 
+}
+
+.silla2, .silla4, .silla6 {
+	transform: rotate(180deg);
+	top: 310px;
+}
+
+.silla3, .silla5, .silla7 {
+	bottom: 15px;
+}
+
+.silla2, .silla3 {
+	left: 40px;
+}
+
+.silla4, .silla5 {
+	left: 190px;
+}
+
+.silla6, .silla7 {
+	left: 340px;
+}
