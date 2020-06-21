@@ -2,39 +2,61 @@ body {
 	background-color: #FFBF00;
 }
 
+.opciones {
+	margin-top: 5%;
+	margin-left: 5%;
+}
+
 .agregar, .borrar {
 	height: 80px;
 	width: 80px;
 	border-radius: 50%;
-	margin-top: 5%;
-	border: 3px solid black;
 }
 
 .agregar {
-	margin-left: 70%;
+	background: url(../Img/agregar.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.borrar {
+	background: url(../Img/borrar.png);
+	background-repeat: no-repeat;
+	background-size: contain;
 }
 
 .mesa {
 	position: absolute;
+	background: url(../Img/mesa.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 300px;
+	width: 600px;
 }
 
 .silla {
 	position: absolute;
+	background: url(../Img/silla.png);
+	background-repeat: no-repeat;
+	background-size: contain;	
+	height: 115px;
+	width: 122px; 
 }
 
 .sala {
 	position: relative;
-	margin-left: 20%;	
+	margin-left: 30%;
+	margin-top: 5%;	
 }
 
 .silla1 {
 	transform: rotate(270deg);
-	left: -130px;
+	left: -135px;
 }
 
 .silla8 {
 	transform: rotate(90deg);
-	left: 510px;
+	left: 520px;
 }
 
 .silla1, .silla8 {
@@ -51,13 +73,13 @@ body {
 }
 
 .silla2, .silla3 {
-	left: 40px;
+	left: 50px;
 }
 
 .silla4, .silla5 {
-	left: 190px;
+	left: 200px;
 }
 
 .silla6, .silla7 {
-	left: 340px;
+	left: 350px;
 }

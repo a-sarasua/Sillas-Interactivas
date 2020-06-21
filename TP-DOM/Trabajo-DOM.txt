@@ -1,7 +1,7 @@
 Trabajo Práctico: DOM
 Alumno: Sarasúa, Agustín
-Fecha de entrega: 14/06
-Vencimiento: 15/06
+
+Funcionando el 14/06, actualizaciones aclaradas abajo de todo.
 
 Consigna:
 Crear una aplicación web que inicialmente muestre una mesa vacía. Utilizando el tablero de control (un botón de agregar y uno de borrar) se podrán agregar, de a una, las sillas que rodean una mesa. La mesa soporta hasta 8 sillas. Inicialmente, será la mesa vacía y los botones de agregar o no. La aparición de sillas será a criterio propio.
@@ -14,27 +14,36 @@ Variables:
 	-let registroSillas (integer): la usaremos para determinar cuál silla en específico se agregará o borrará. Será una variable de control que llevará el número de silla en el que se está situado. Entonces, se inicializará en 0.
 
 Inicialmente, tendremos (en HTML):
-	-Imagen de la mesa en el centro de la pantalla
-	-Botón de agregar: un '+' de color verde. Al ser el '+' una imagen, se pondrá un elemento img.
-	-Botón de borrar: un 'x' de color rojo. Será una imagen como la anterior.
+	-Imagen de la mesa
+	-Botón de agregar: un '+' de color verde.
+	-Botón de borrar: un 'x' de color rojo.
 
 Entonces, el body del HTML tendrá:
 	contenido (div)
-		opción agregar (img con clase 'agregar' linkeado a 'agregar.png')
-		opción borrar (img con clase 'borrar' linkeado a 'borrar.png')
+		opciones (div)
+			botón agregar (button con clase 'agregar')
+			botón borrar (button con clase 'borrar')
 		sala (div)
-			mesa (img)
+			div con clase 'mesa'
 			//aquí se irán agregando las sillas según se requiera
 
 En CSS, tendremos que trabajar con:
+	-botón agregar:
+		linkeado a 'agregar.png' como fondo (que aparecerá una sola vez)	
+	-botón borrar:
+		linkeado a 'borrar.png' como fondo (que aparecerá una sola vez)
 	-botón agregar y botón borrar
-		se le dará margen izquierdo cosa que no tape a las sillas
+		estará a la izquierda cosa que no tape a las sillas
+		tendrá borde redondeado
 	-sala: 
 		será el elemento 'padre' (position relative) de la mesa y las sillas
 		con esta clase posicionaremos a todo el conjunto, preferentemente en el medio
 	-mesa:
 		position absolute (como 'hijo' de 'sala')
-	-silla: todas las sillas tendrán esta clase, cuyo fin es que sean 'hijos' del div 'sala' (position absolute)
+		linkeado a 'mesa.png' como fondo (que aparecerá una sola vez)
+	-silla: todas las sillas tendrán esta clase
+		serán 'hijos' del div 'sala' (position absolute)
+		linkeado a 'silla.png' como fondo (idem mesa)
 	-sillax: cada una tendrá una combinación particular, pero hay cosas que se repiten. Veamos caso por caso:
 		-silla izquierda (silla1)
 			rotación 270 grados con 'transform(rotate(270deg))'
@@ -107,7 +116,7 @@ Funciones en JS:
 			Cuando el usuario haga click en la imagen de clase 'agregar':
 				recibe registroSillas
 				si registroSillas es igual a 8:
-					alertar al usuario que "Ya se agregaron todas las sillas"
+					return (o sea, la función termina ahí al no haber nada más que hacer)
 				en caso de que no:
 					sumar uno a registroSillas
 					creo (const) nuevaSilla como un nuevo elemento del documento de tag 'img'
@@ -135,8 +144,20 @@ Funciones en JS:
 			Cuando el usuario haga click en la imagen de clase 'borrar' (addEventListener):
 				crear variable (const) sillaAEliminar (querySelector)
 					será el elemento del doumento que tiene como clase 'sillax' siendo 'x' registroSillas
-				si registroSillas es 0 o sillaAEliminar es 'nulo' (o sea cuando falle al buscar una silla de índice '0')
-					alertar al usuario que "No quedan sillas por sacar"
+				si sillaAEliminar es 'nulo' (o sea cuando falle al buscar una silla de índice '0')
+					return (fin de la función, no devuelve nada)
 				en caso de que no:
 					restar uno a registroSillas
 					remuevo sillaAEliminar del div 'sala'(con removeChild)
+
+ACTUALIZACIONES 21/06: 
+A partir de lo visto en la clase del 18/06:
+	-Se reemplazaron las imagenes 'borrar' y 'agregar' por botones
+		la imágenes se pusieron como fondo mediante CSS
+	-A la mesa con tag Img se la reemplazó por un div (misma clase)
+		la imagen se puso mediante CSS idem anterior
+	-Para linkear la imagen a las sillas, se usó CSS. Antes se hacía con JS.
+	-Se acortaron las funciónes borrarSilla y agregarSilla:
+		Sacando una condición innecesaria en el if
+		Haciendo que, cuando se llegue al límite de sillas (0 u 8), termine la función
+	-Se pensó trabajar con Flex en las sillas, pero implicaría alargar demasiado el código ya que en este caso se usa la lógica de sacar y agregar elementos al HTML. Preferí mantener la "esencia" (?) de este método antes que romper todo y prácticamente copiar lo que se hizo en la clase. De entender, se entendió, por lo que será utilizado en el próximo trabajo.

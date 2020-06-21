@@ -6,11 +6,10 @@ window.onload = function() {
 
 	function agregarSilla(event) {
 		if (registroSillas === 8) {
-			alert('Ya se agregaron todas las sillas')
+			return
 		} else {
 			registroSillas++
-			const nuevaSilla = document.createElement('img')
-			nuevaSilla.src = '../Img/silla.png'
+			const nuevaSilla = document.createElement('div')
 			nuevaSilla.classList.add('silla', 'silla' + registroSillas)
 			sala.append(nuevaSilla)
 		}
@@ -18,8 +17,8 @@ window.onload = function() {
 	
 	function borrarSilla(event) {
 		const sillaABorrar = document.querySelector('.silla' + registroSillas)
-		if (registroSillas === 0 || sillaABorrar === null) {
-			alert('No hay sillas que borrar')
+		if (sillaABorrar === null) {
+			return
 		} else {
 			registroSillas--
 			sala.removeChild(sillaABorrar)
